@@ -65,7 +65,7 @@ app.get('/books/:id', (req, res) => {
     if (err) return res.status(500).json(err);
     if (!data || data.length === 0) return res.status(404).json('Book not found');
     
-    return res.json(data[0]); // Assuming you want to send the first result if any
+    return res.json(data[0]);
   });
 });
 

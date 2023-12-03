@@ -3,14 +3,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CreateBook() {
-  // const [book, setBook] = useState({
-  //   title: '',
-  //   description: '',
-  //   price: null,
-  //   cover: null
-  // });
-
-  // const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
