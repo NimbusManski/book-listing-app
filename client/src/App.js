@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
 import Books from './pages/Books';
-import UpdateBook from './pages/UpdateBook';
+import EditBook from './pages/EditBook';
 import CreateBook from './pages/CreateBook';
 
 function App() {
@@ -11,7 +11,8 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Books />} /> 
         <Route path={'/create'} element={<CreateBook />} /> 
-        <Route path={'/update/:id'} element={<UpdateBook />} /> 
+        <Route path={'/edit/:id'} element={<EditBook />} /> 
+
       </Routes>
      </BrowserRouter>
     </div>

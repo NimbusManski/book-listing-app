@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
@@ -13,8 +14,8 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: 'WaterBlackCube79',
+  user: process.env.USER,
+  password: process.env.DB_PASSWORD,
   database: 'books'
 });
 
@@ -23,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/books', (req,res) => {
-  const q = 'SELECT * FROM books';
+  const q = 'SELECT * FROM books ORDER BY id DESC';
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -49,14 +50,23 @@ app.post('/books', uploadMiddleware.single('file'), (req, res) => {
     newPath
   ];
 
-  console.log('asdf');
-
- 
 
 db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json('book created successfully');
   })
+});
+
+app.get('/books/:id', (req, res) => {
+  const bookId = req.params.id;
+  const q = 'SELECT * FROM books WHERE id = ?';
+
+  db.query(q, [bookId], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (!data || data.length === 0) return res.status(404).json('Book not found');
+    
+    return res.json(data[0]); // Assuming you want to send the first result if any
+  });
 });
 
 app.get('/uploads/:filename', (req, res) => {
@@ -74,16 +84,28 @@ app.delete('/books/:id', (req, res) => {
   })
 });
 
-app.put('/books/:id', (req, res) => {
+app.put('/books/:id', uploadMiddleware.single('file'), (req, res) => {
   const bookId = req.params.id;
-  const q = 'UPDATE books SET `title` = ?, `description` = ?, `price` = ?, `cover` = ? WHERE id = ?';
+  const { title, description, price } = req.body;
+  const q = 'UPDATE books SET `title` = ?, `description` = ?, `price` = ?, `cover` = IFNULL(?, `cover`) WHERE id = ?';
 
+  let newPath = null;
+  if (req.file) {
+    const { originalname, path } = req.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    newPath = path + '.' + ext;
+    fs.renameSync(path, newPath);
+  }
+  // res.json({ext})
+  
   const values = [
-    req.body.title,
-    req.body.description,
-    req.body.price,
-    req.body.cover
+    title,
+    description,
+    price,
+    newPath
   ];
+
 
   db.query(q, [...values, bookId], (err, data) => {
     if (err) return res.json(err);

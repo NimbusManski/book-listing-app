@@ -1,11 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nabla&family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nabla&family=Open+Sans:wght@300;400&family=Quicksand&display=swap');
 .App {
-  height: 100vh;
+  background: linear-gradient(rgba(0,0,0, 0.4), rgba(0,0,0, 0.2)), url(images/bangsal-nam-9HMGyZJfrk8-unsplash.jpg) no-repeat center center fixed;
+  background-size: cover;
   padding: 0 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
+
+h1 {
+  font-family: 'Nabla';
+  font-size: 3.5rem;
+  padding: 50px;
+  margin-bottom: 0;
+}
+
 
 .books {
   display: grid;
@@ -22,18 +34,22 @@
   max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden; 
-  padding: 10px; 
+  padding: 20px; 
 }
 
 .book h2 {
+  font-family: 'Quicksand';
   height: 40px; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  
+  color: #f2f2f2
+}
+
+.price {
+  color: #15b356;
+  margin-bottom: 10px;
 }
 
 .book p {
+  font-family: serif;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -41,37 +57,91 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+  color: #f2f2f2
 }
 
 
-.delete {
+.new-book-btn, .new-book-btn a{
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #333;
+  color: white;
+  padding: 3px 6px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+svg {
+  width: 20px;
+}
+
+.add-book-h1 {
+  padding: 0
+  
+}
+
+.edit-book-h1 {
+  padding: 0;
+  margin: 10px;
+}
+
+.edit-btn, .edit-btn a {
+  width:62px;
+  height:23px;
+  margin: 5px;
+  margin-bottom: 1px;
   border: none;
   padding: 3px 6px;
   cursor: pointer;
-  background-color: white;
-  border: 1px solid rgba(242, 100, 100);
-  color: rgb(242,100,100);
+  background-color: rgb(37, 127, 184);
+  border: none;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.delete-btn {
+  margin: 5px;
+  border: none;
+  padding: 3px 6px;
+  cursor: pointer;
+  background-color: rgb(203, 81, 81);
+  border: none;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 200px;
   object-fit: cover;
   background-color: rgb(106, 229, 240);
   border: 1px solid rgba(204, 204, 243);
   color: rgb(139,139,234);
 }
 
+.form-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .form {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
 }
 
 .form button {
   border: none;
   padding: 10px;
-  background-color: blueviolet;
+  background-color: #333;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -79,10 +149,22 @@ img {
 }
 
 input {
+  font-family: 'Open Sans';
+  color: black;
   width: 250px;
   padding: 10px;
   border: 1px solid gray;
   border-radius: 5px;
+}
+
+textarea {
+  font-family: 'Open Sans';
+  width: 250px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background: transparent;
+  color: white;
 }
 
 .cover-input {
@@ -91,6 +173,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px dashed #2383dc
+  border: 2px dashed rgb(241, 241, 241);
+  color: rgb(255, 255, 255);
 }
 
