@@ -62,8 +62,6 @@ export default function EditBook() {
       data
     );
 
-    console.log(await response.data);
-
     if (response.status === 200) {
       setRedirect(true);
     }

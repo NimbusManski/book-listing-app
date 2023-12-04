@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CreateBook() {
@@ -33,14 +33,9 @@ export default function CreateBook() {
     }
     console.log(files);
 
-    const response = await fetch("http://localhost:8080/books", {
-      method: "POST",
-      body: data,
-    });
+    const response = await axios.post("http://localhost:8080/books", data);
 
-    console.log(await response.json);
-
-    if (response.ok) {
+    if (response.status === 200) {
       setRedirect(true);
     }
   }
