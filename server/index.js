@@ -209,11 +209,6 @@ app.get("/books/:id", (req, res) => {
   }
 });
 
-app.get("/uploads/:filename", (req, res) => {
-  const { filename } = req.params;
-  res.sendFile(path.join(__dirname, "uploads", filename));
-});
-
 app.delete("/books/:id", (req, res) => {
   try {
     const bookId = req.params.id;

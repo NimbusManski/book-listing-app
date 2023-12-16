@@ -21,7 +21,7 @@ function Header() {
         }
       } catch (err) {
         console.log(err);
-        if (er.response.status === 401) {
+        if (err.response.status === 401) {
           alert("Session has expired");
           setIsLoggedIn(false);
           navigate("/login");

@@ -29,7 +29,7 @@ function Register() {
     } catch (err) {
       console.log(err);
 
-      if (error.response.status === 409) {
+      if (err.response.status === 409) {
         alert("User already exists. Please choose a different name");
       }
     }
