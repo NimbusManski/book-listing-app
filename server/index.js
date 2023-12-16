@@ -4,66 +4,209 @@ const mysql = require("mysql");
 const cors = require("cors");
 const multer = require("multer");
 const uploadMiddleware = multer({ dest: "uploads/" });
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
 const fs = require("fs");
 
 const app = express();
 
+const salt = bcrypt.genSaltSync(10);
+const secret = process.env.SECRET;
+
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 const db = mysql.createConnection({
   host: "localhost",
   user: process.env.USER,
   password: process.env.DB_PASSWORD,
-  database: "books",
+  database: "book_store",
 });
 
 app.get("/", (req, res) => {
   res.json("Backend running");
 });
 
+app.post("/register", (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const hashedPass = bcrypt.hashSync(password, salt);
+
+    if (!username || !password) {
+      return res.status(400).json({ error: "Username and password required" });
+    }
+
+    q = "SELECT * FROM book_store.users WHERE username = ?";
+
+    db.query(q, [username], (err, data) => {
+      if (err) {
+        console.error("Error checking if user exists:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+      if (data.length > 0) {
+        return res.status(409).json({ error: "User already exists" });
+      } else {
+        const q =
+          "INSERT INTO book_store.users (`username`, `password`) VALUES (?, ?)";
+        db.query(q, [username, hashedPass], (err, data) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Internal Server Error" });
+          } else {
+            res.status(201).json({ username, hashedPass });
+          }
+        });
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/login", (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log(username, password);
+
+    if (!username || !password) {
+      res.status(400).json({ error: "Internal server error" });
+    }
+
+    const q = "SELECT * FROM book_store.users WHERE username = ?";
+
+    db.query(q, [username], (err, data) => {
+      console.log("Query Error:", err);
+      console.log("Query Result:", data);
+      if (err) {
+        console.log(data);
+      }
+
+      if (data.length === 1) {
+        const { id, username, password: storedPass } = data[0];
+        console.log("Entered password:", password);
+        console.log("Stored hashed password:", storedPass);
+        const passMatch = bcrypt.compareSync(password, storedPass);
+        if (passMatch) {
+          jwt.sign(
+            {
+              id,
+              username,
+            },
+            secret,
+            {
+              expiresIn: "1h",
+            },
+            (err, token) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.cookie("token", token).json({ id, username });
+              }
+            }
+          );
+        }
+      } else {
+        res.status(401).json({ error: "Invalid username or password" });
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/profile", (req, res) => {
+  try {
+    const { token } = req.cookies;
+
+    jwt.verify(token, secret, {}, (err, info) => {
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          res.status(401).json({ message: "Token has expired" });
+        } else if (err.name === "JsonWebTokenError") {
+          res.status(401).json({ message: "Invalid token" });
+        } else {
+          res.status(500).json({ message: "Internal server error" });
+        }
+      } else {
+        res.json(info);
+      }
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.get("/books", (req, res) => {
-  const q = "SELECT * FROM books ORDER BY id DESC";
-  db.query(q, (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
+  try {
+    const q =
+      "SELECT books.*, users.username FROM books JOIN users ON books.user_id = users.id ORDER BY books.id DESC";
+    db.query(q, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.post("/books", uploadMiddleware.single("file"), (req, res) => {
-  q = "INSERT INTO books (`title`, `description`, `price`, `cover`) VALUES (?)";
-  const { originalname, path } = req.file;
+  try {
+    q =
+      "INSERT INTO book_store.books (`user_id`, `title`, `description`, `price`, `cover`) VALUES (?)";
+    const { originalname, path } = req.file;
+    const userId = req.body.user_id;
+    console.log(req.body);
 
-  const parts = originalname.split(".");
-  const ext = parts[parts.length - 1];
-  const newPath = path + "." + ext;
-  fs.renameSync(path, newPath);
+    const parts = originalname.split(".");
+    const ext = parts[parts.length - 1];
+    const newPath = path + "." + ext;
+    fs.renameSync(path, newPath);
 
-  const values = [
-    req.body.title,
-    req.body.description,
-    req.body.price,
-    newPath,
-  ];
+    const values = [
+      userId,
+      req.body.title,
+      req.body.description,
+      req.body.price,
+      newPath,
+    ];
 
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("book created successfully");
-  });
+    db.query(q, [values], (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Internal server error" });
+      } else {
+        return res.json("book created successfully");
+      }
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.get("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  const q = "SELECT * FROM books WHERE id = ?";
+  try {
+    const bookId = req.params.id;
+    const q = "SELECT * FROM book_store.books WHERE id = ?";
 
-  db.query(q, [bookId], (err, data) => {
-    if (err) return res.status(500).json(err);
-    if (!data || data.length === 0)
-      return res.status(404).json("Book not found");
+    db.query(q, [bookId], (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (!data || data.length === 0)
+        return res.status(404).json("Book not found");
 
-    return res.json(data[0]);
-  });
+      return res.json(data[0]);
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.get("/uploads/:filename", (req, res) => {
@@ -72,36 +215,65 @@ app.get("/uploads/:filename", (req, res) => {
 });
 
 app.delete("/books/:id", (req, res) => {
-  const bookId = req.params.id;
-  const q = "DELETE FROM books WHERE id = ?";
+  try {
+    const bookId = req.params.id;
+    const userId = req.body.user_id;
+    const q = "DELETE FROM books WHERE id = ?";
 
-  db.query(q, [bookId], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("book deleted successfully");
-  });
+    db.query(q, [bookId, userId], (err, data) => {
+      if (err) return res.json(err);
+      return res.json("book deleted successfully");
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 app.put("/books/:id", uploadMiddleware.single("file"), (req, res) => {
-  const bookId = req.params.id;
-  const { title, description, price } = req.body;
-  const q =
-    "UPDATE books SET `title` = ?, `description` = ?, `price` = ?, `cover` = IFNULL(?, `cover`) WHERE id = ?";
+  try {
+    const bookId = req.params.id;
+    const { title, description, price } = req.body;
+    const q =
+      "UPDATE book_store.books SET `title` = ?, `description` = ?, `price` = ?, `cover` = IFNULL(?, `cover`) WHERE id = ?";
 
-  let newPath = null;
-  if (req.file) {
-    const { originalname, path } = req.file;
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
+    let newPath = null;
+    if (req.file) {
+      const { originalname, path } = req.file;
+      const parts = originalname.split(".");
+      const ext = parts[parts.length - 1];
+      newPath = path + "." + ext;
+      fs.renameSync(path, newPath);
+    }
+
+    const values = [title, description, price, newPath];
+
+    db.query(q, [...values, bookId], (err, data) => {
+      if (err) return res.json(err);
+      return res.json("book updated successfully");
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
   }
+});
 
-  const values = [title, description, price, newPath];
+app.delete("/profile/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+    const q = "DELETE FROM users WHERE id = ?";
+    db.query(q, [id], (err, data) => {
+      if (err) return res.json(err);
+      return res.json("Account successfully deleted");
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "internal server error" });
+  }
+});
 
-  db.query(q, [...values, bookId], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("book updated successfully");
-  });
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json("cookie deleted");
 });
 
 app.listen(8080, (req, res) => {

@@ -1,42 +1,69 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 import axios from "axios";
 
 export default function CreateBook() {
+  const { setUserInfo, userInfo } = useContext(UserContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const response = await axios.get("http://localhost:8080/profile", {
+          withCredentials: true,
+        });
+
+        if (response.status === 200) {
+          setUserInfo(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+        if (err.response.status === 401) {
+          navigate("/login");
+        }
+      }
+    }
+    fetchUserData();
+  }, []);
 
   async function addBookHandler(e) {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    if (!title || !description || !price || !files[0]) {
-      alert("Please fill in all fields and upload a cover image");
-      return;
-    } else if (description.length > 255) {
-      alert("Description exceeds 255 character max");
-      return;
-    } else if (title.length > 45) {
-      alert("Title exeeds 45 character max");
-      return;
-    }
+      if (!title || !description || !price || !files[0]) {
+        alert("Please fill in all fields and upload a cover image");
+        return;
+      } else if (description.length > 999) {
+        alert("Description exceeds 999 character max");
+        return;
+      } else if (title.length > 255) {
+        alert("Title exceeds 255 character max");
+        return;
+      }
 
-    const data = new FormData();
-    data.set("title", title);
-    data.set("description", description);
-    data.set("price", price);
-    data.set("file", files[0]);
-    if (files?.[0]) {
-      data.set("file", files?.[0]);
-    }
-    console.log(files);
+      const data = new FormData();
+      data.set("user_id", userInfo.id);
+      data.set("title", title);
+      data.set("description", description);
+      data.set("price", price);
+      data.set("file", files[0]);
 
-    const response = await axios.post("http://localhost:8080/books", data);
+      const response = await axios.post("http://localhost:8080/books", data);
 
-    if (response.status === 200) {
-      setRedirect(true);
+      if ((response.status = 200)) {
+        setRedirect(true);
+      }
+    } catch (err) {
+      if (err.response.status === 401) {
+        alert("Session has expired");
+        navigate("/login");
+      }
     }
   }
 
@@ -47,7 +74,7 @@ export default function CreateBook() {
   return (
     <div className="form-container">
       <form className="form">
-        <h1 className="add-book-h1">Add Book</h1>
+        <h1>Add Book</h1>
         <input
           type="text"
           value={title}

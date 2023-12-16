@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function EditBook() {
-   const [book, setBook] = useState({
+  const [book, setBook] = useState({
     title: "",
     description: "",
     price: "",
@@ -11,11 +11,11 @@ export default function EditBook() {
   });
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
-  
+  const navigate = useNavigate();
+
   const location = useLocation();
 
   const bookId = location.pathname.split("/")[2];
-  console.log(bookId);
 
   useEffect(() => {
     async function fetchBookDetails() {
@@ -23,10 +23,9 @@ export default function EditBook() {
         const response = await axios.get(
           `http://localhost:8080/books/${bookId}`
         );
-        console.log(book.cover);
         setBook(response.data);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     }
 
@@ -39,11 +38,11 @@ export default function EditBook() {
     if (!book.title || !book.description || !book.price) {
       alert("Please fill in all fields");
       return;
-    } else if (book.description.length > 255) {
-      alert("Description exceeds 255 character max");
+    } else if (book.description.length > 999) {
+      alert("Description exceeds 999 character max");
       return;
-    } else if (book.title.length > 45) {
-      alert("Title exeeds 45 character max");
+    } else if (book.title.length > 255) {
+      alert("Title exeeds 255 character max");
       return;
     }
 
@@ -51,11 +50,10 @@ export default function EditBook() {
     data.set("title", book.title);
     data.set("description", book.description);
     data.set("price", book.price);
-    
+
     if (files?.[0]) {
       data.set("file", files?.[0]);
     }
-    console.log(files);
 
     const response = await axios.put(
       `http://localhost:8080/books/${bookId}`,
@@ -64,6 +62,9 @@ export default function EditBook() {
 
     if (response.status === 200) {
       setRedirect(true);
+    } else if (response.status === 401) {
+      alert("Session has expired");
+      navigate("/login");
     }
   }
 
@@ -74,7 +75,7 @@ export default function EditBook() {
   return (
     <div className="form-container">
       <form className="form">
-        <h1 className="add-book-h1">Edit Book</h1>
+        <h1>Edit Book</h1>
         <input
           type="text"
           value={book.title}
@@ -109,5 +110,3 @@ export default function EditBook() {
     </div>
   );
 }
-
-  
