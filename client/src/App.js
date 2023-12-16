@@ -20,6 +20,7 @@ function App() {
             <Route path={"/create"} element={<CreateBook />} />
             <Route path={"/edit/:id"} element={<EditBook />} />
             <Route path={"/books/:id"} element={<BookDetails />} />
+            <Route path="*" element={<Books />} />
           </Routes>
         </BrowserRouter>
       </UserContextProvider>
