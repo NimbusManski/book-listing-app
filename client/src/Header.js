@@ -26,6 +26,9 @@ function Header() {
           setIsLoggedIn(false);
           navigate("/login");
         }
+        if(err.response.status === 401 && !isLoggedIn) {
+          navigate("/login");
+        }
       }
     }
     fetchUserData();
