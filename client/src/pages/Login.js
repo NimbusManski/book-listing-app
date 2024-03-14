@@ -12,7 +12,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        `${process.env.SERVER}/login`,
+        `$${process.env.REACT_APP_SERVER_URL}/login`,
         {
           username: username,
           password: password,

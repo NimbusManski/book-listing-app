@@ -15,7 +15,7 @@ export default function CreateBook() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get(`${process.env.SERVER}/profile`, {
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
           withCredentials: true,
         });
 
@@ -30,7 +30,7 @@ export default function CreateBook() {
       }
     }
     fetchUserData();
-  }, [setUserInfo, navigate]);
+  }, []);
 
   async function addBookHandler(e) {
     try {
@@ -54,7 +54,7 @@ export default function CreateBook() {
       data.set("price", price);
       data.set("file", files[0]);
 
-      const response = await axios.post(`${process.env.SERVER}/books`, data);
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/books`, data);
 
       if ((response.status = 200)) {
         setRedirect(true);

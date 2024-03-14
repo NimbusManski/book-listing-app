@@ -12,7 +12,7 @@ const BookDetails = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get("http://localhost:8081/profile", {
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
           withCredentials: true,
         });
 
@@ -29,7 +29,7 @@ const BookDetails = () => {
 
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/books/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/books/${id}`);
         setBook(response.data);
       } catch (err) {
         console.log(err);
@@ -38,7 +38,7 @@ const BookDetails = () => {
 
     fetchUserData();
     fetchBookDetails();
-  }, [id, userInfo.id, navigate, setUserInfo]);
+  }, [id, userInfo.id]);
 
   if (!book) {
     return <div>Loading...</div>;
@@ -49,7 +49,7 @@ const BookDetails = () => {
       "Are you sure you want to delete this book?"
     );
     if (shouldDelete) {
-      await axios.delete(`${process.env.SERVER}/books/${id}`);
+      await axios.delete(`${process.env.REACT_APP_SERVER_URL}/books/${id}`);
       navigate("/");
     }
   }
@@ -58,7 +58,7 @@ const BookDetails = () => {
     <div className="detailed-book">
       <div>
         {book.cover && (
-          <img src={`${process.env.SERVER}/${book.cover}`} alt="" />
+          <img src={`${process.env.REACT_APP_SERVER_URL}/${book.cover}`} alt="" />
         )}
       </div>
 
