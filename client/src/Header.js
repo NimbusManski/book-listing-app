@@ -21,14 +21,15 @@ function Header() {
         }
       } catch (err) {
         console.log(err);
-        if (err.response.status === 401) {
+        if(err.response.status === 401 && !isLoggedIn) {
+          navigate("/login");
+        }
+        if (err.response.status === 401 && isLoggedIn) {
           alert("Session has expired");
           setIsLoggedIn(false);
           navigate("/login");
         }
-        if(err.response.status === 401 && !isLoggedIn) {
-          navigate("/login");
-        }
+       
       }
     }
     fetchUserData();
