@@ -9,7 +9,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const fs = require("fs");
-const path = require('path');
 
 const app = express();
 
@@ -20,8 +19,6 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "https://book-listing-app.onrender.com" }));
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(express.static(path.join(__dirname, 'client', 'build')));
-
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -33,10 +30,6 @@ const db = mysql.createConnection({
 
 app.get("/", (req, res) => {
   res.json("Backend running");
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 app.post("/register", (req, res) => {
