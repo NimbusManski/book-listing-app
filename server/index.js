@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "https://book-listing-app.onrender.com" }));
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 
 const db = mysql.createConnection({
@@ -30,7 +30,7 @@ const db = mysql.createConnection({
   database: "book_store",
 });
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 app.get("/", (req, res) => {
