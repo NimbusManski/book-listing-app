@@ -1,4 +1,3 @@
-require("dotenv").config();
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
