@@ -37,7 +37,7 @@ function Header() {
 
   function logoutHandler() {
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+      .post(`https://book-listing-app-api.onrender.com/logout`, {
         withCredentials: true,
       })
       .then(() => {
@@ -57,7 +57,7 @@ function Header() {
       );
       if (shouldDelete) {
         const response = await axios.delete(
-          `${process.env.REACT_APP_SERVER_URL}/profile/${userInfo.id}`,
+          `https://book-listing-app-api.onrender.com/profile/${userInfo.id}`,
           { withCredentials: true }
         );
         if (response.status === 200) {
