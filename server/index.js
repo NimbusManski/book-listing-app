@@ -29,12 +29,14 @@ const db = mysql.createConnection({
   password: process.env.DB_PASSWORD,
   database: "book_store",
 });
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
+
 
 app.get("/", (req, res) => {
   res.json("Backend running");
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 app.post("/register", (req, res) => {
