@@ -12,7 +12,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/register",
+        "http://localhost:8081/register",
         {
           username: username,
           password: password,

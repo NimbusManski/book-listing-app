@@ -9,7 +9,7 @@ export default function Books() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await axios.get("http://localhost:8080/books");
+        const response = await axios.get("http://localhost:8081/books");
         setBooks(response.data);
       } catch (err) {
         console.log(err);
@@ -26,7 +26,7 @@ export default function Books() {
           <div className="book" key={book.id}>
             <Link to={`/books/${book.id}`}>
               {book.cover && (
-                <img src={`http://localhost:8080/${book.cover}`} alt="" />
+                <img src={`http://localhost:8081/${book.cover}`} alt="" />
               )}
               <h2>{book.title}</h2>
               <p>{book.description}</p>

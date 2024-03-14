@@ -271,6 +271,6 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json("cookie deleted");
 });
 
-app.listen(8080, (req, res) => {
-  console.log("server running on port 8080");
+app.listen(process.env.PORT, (req, res) => {
+  console.log("server running on port 8081");
 });

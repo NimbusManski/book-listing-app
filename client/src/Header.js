@@ -11,7 +11,7 @@ function Header() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get("http://localhost:8080/profile", {
+        const response = await axios.get("http://localhost:8081/profile", {
           withCredentials: true,
         });
 
@@ -33,7 +33,7 @@ function Header() {
 
   function logoutHandler() {
     axios
-      .post("http://localhost:8080/logout", {
+      .post("http://localhost:8081/logout", {
         withCredentials: true,
       })
       .then(() => {
@@ -53,7 +53,7 @@ function Header() {
       );
       if (shouldDelete) {
         const response = await axios.delete(
-          `http://localhost:8080/profile/${userInfo.id}`,
+          `http://localhost:8081/profile/${userInfo.id}`,
           { withCredentials: true }
         );
         if (response.status === 200) {

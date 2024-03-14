@@ -21,7 +21,7 @@ export default function EditBook() {
     async function fetchBookDetails() {
       try {
         const response = await axios.get(
-          `http://localhost:8080/books/${bookId}`
+          `http://localhost:8081/books/${bookId}`
         );
         setBook(response.data);
       } catch (err) {
@@ -56,7 +56,7 @@ export default function EditBook() {
     }
 
     const response = await axios.put(
-      `http://localhost:8080/books/${bookId}`,
+      `http://localhost:8081/books/${bookId}`,
       data
     );
 

@@ -12,7 +12,7 @@ const BookDetails = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get("http://localhost:8080/profile", {
+        const response = await axios.get("http://localhost:8081/profile", {
           withCredentials: true,
         });
 
@@ -29,7 +29,7 @@ const BookDetails = () => {
 
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/books/${id}`);
+        const response = await axios.get(`http://localhost:8081/books/${id}`);
         setBook(response.data);
       } catch (err) {
         console.log(err);
@@ -49,7 +49,7 @@ const BookDetails = () => {
       "Are you sure you want to delete this book?"
     );
     if (shouldDelete) {
-      await axios.delete(`http://localhost:8080/books/${id}`);
+      await axios.delete(`http://localhost:8081/books/${id}`);
       navigate("/");
     }
   }
@@ -58,7 +58,7 @@ const BookDetails = () => {
     <div className="detailed-book">
       <div>
         {book.cover && (
-          <img src={`http://localhost:8080/${book.cover}`} alt="" />
+          <img src={`http://localhost:8081/${book.cover}`} alt="" />
         )}
       </div>
 
