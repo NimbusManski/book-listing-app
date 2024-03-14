@@ -33,7 +33,7 @@ function Header() {
       }
     }
     fetchUserData();
-  }, []);
+  }, [setUserInfo, isLoggedIn, navigate]);
 
   function logoutHandler() {
     axios

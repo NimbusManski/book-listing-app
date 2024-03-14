@@ -30,7 +30,7 @@ export default function CreateBook() {
       }
     }
     fetchUserData();
-  }, []);
+  }, [setUserInfo, navigate]);
 
   async function addBookHandler(e) {
     try {

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const PORT = process.env.PORT || 3000;
 const mysql = require("mysql");
 const cors = require("cors");
 const multer = require("multer");
@@ -8,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const fs = require("fs");
+const path = require('path');
 
 const app = express();
 
@@ -18,12 +20,17 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "https://book-listing-app.onrender.com" }));
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use(express.static(path.join(__dirname, 'build')));
+
 
 const db = mysql.createConnection({
   host: "localhost",
   user: process.env.USER,
   password: process.env.DB_PASSWORD,
   database: "book_store",
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.get("/", (req, res) => {
@@ -271,6 +278,6 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json("cookie deleted");
 });
 
-app.listen(process.env.PORT, (req, res) => {
+app.listen(PORT, (req, res) => {
   console.log("server running on port 8081");
 });
