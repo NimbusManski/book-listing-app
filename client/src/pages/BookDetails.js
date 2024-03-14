@@ -49,7 +49,7 @@ const BookDetails = () => {
       "Are you sure you want to delete this book?"
     );
     if (shouldDelete) {
-      await axios.delete(`http://localhost:8081/books/${id}`);
+      await axios.delete(`${process.env.SERVER}/books/${id}`);
       navigate("/");
     }
   }
@@ -58,7 +58,7 @@ const BookDetails = () => {
     <div className="detailed-book">
       <div>
         {book.cover && (
-          <img src={`http://localhost:8081/${book.cover}`} alt="" />
+          <img src={`${process.env.SERVER}/${book.cover}`} alt="" />
         )}
       </div>
 

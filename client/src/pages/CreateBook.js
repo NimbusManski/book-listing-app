@@ -15,7 +15,7 @@ export default function CreateBook() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get("http://localhost:8081/profile", {
+        const response = await axios.get(`${process.env.SERVER}/profile`, {
           withCredentials: true,
         });
 
@@ -54,7 +54,7 @@ export default function CreateBook() {
       data.set("price", price);
       data.set("file", files[0]);
 
-      const response = await axios.post("http://localhost:8081/books", data);
+      const response = await axios.post(`${process.env.SERVER}/books`, data);
 
       if ((response.status = 200)) {
         setRedirect(true);

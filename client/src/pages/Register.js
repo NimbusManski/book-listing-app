@@ -12,7 +12,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/register",
+        `${process.env.SERVER}/register`,
         {
           username: username,
           password: password,
