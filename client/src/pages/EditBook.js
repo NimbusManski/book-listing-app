@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { useState, useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
