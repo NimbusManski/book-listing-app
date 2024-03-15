@@ -11,7 +11,7 @@ function Header() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get(`/profile`, {
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
           withCredentials: true,
         });
 
@@ -37,7 +37,7 @@ function Header() {
 
   function logoutHandler() {
     axios
-      .post(`/logout`, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
         withCredentials: true,
       })
       .then(() => {
@@ -57,7 +57,7 @@ function Header() {
       );
       if (shouldDelete) {
         const response = await axios.delete(
-          `/profile/${userInfo.id}`,
+          `${process.env.REACT_APP_SERVER_URL}/profile/${userInfo.id}`,
           { withCredentials: true }
         );
         if (response.status === 200) {

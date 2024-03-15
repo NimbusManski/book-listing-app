@@ -21,7 +21,7 @@ export default function EditBook() {
     async function fetchBookDetails() {
       try {
         const response = await axios.get(
-          `/books/${bookId}`
+          `${process.env.REACT_APP_SERVER_URL}/books/${bookId}`
         );
         setBook(response.data);
       } catch (err) {

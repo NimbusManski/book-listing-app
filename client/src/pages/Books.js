@@ -9,7 +9,7 @@ export default function Books() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await axios.get(`/books`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/books`);
         setBooks(response.data);
         console.log(response.data)
       } catch (err) {
@@ -27,7 +27,7 @@ export default function Books() {
           <div className="book" key={book.id}>
             <Link to={`/books/${book.id}`}>
               {book.cover && (
-                <img src={`/${book.cover}`} alt="" />
+                <img src={`${process.env.REACT_APP_SERVER_URL}/${book.cover}`} alt="" />
               )}
               <h2>{book.title}</h2>
               <p>{book.description}</p>
