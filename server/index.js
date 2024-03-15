@@ -14,8 +14,8 @@ const app = express();
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
 
-app.use(express.json());
 app.use(cors({ credentials: true, origin: "https://book-listing-app.onrender.com" }));
+app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
