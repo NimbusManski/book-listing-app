@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const PORT = process.env.PORT || 3000;
 const mysql = require("mysql");
 const cors = require("cors");
 const multer = require("multer");
@@ -75,7 +74,7 @@ app.post("/login", (req, res) => {
     console.log(username, password);
 
     if (!username || !password) {
-      res.status(400).json({ error: "Internal server error" });
+      return res.status(400).json({ error: "Username and password are required" });
     }
 
     const q = "SELECT * FROM book_store.users WHERE username = ?";
@@ -273,6 +272,6 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json("cookie deleted");
 });
 
-app.listen(PORT, (req, res) => {
+app.listen(process.env.PORT, (req, res) => {
   console.log("server running on port 8081");
 });
