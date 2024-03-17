@@ -273,5 +273,5 @@ app.post("/logout", (req, res) => {
 });
 
 app.listen(process.env.PORT, (req, res) => {
-  console.log("server running on port 8081");
+  console.log("Backend running");
 });
