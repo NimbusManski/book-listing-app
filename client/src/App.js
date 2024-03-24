@@ -7,8 +7,18 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
 import { UserContextProvider } from "./UserContext";
+import { useEffect } from "react";
 
 function App() {
+useEffect(() => {
+  const test = async () => {
+    const res = await fetck('https://book-listing-app-api.onrender.com/AlotOfArgonians/test') 
+      console.log(res);
+    
+  }
+})
+
+
   return (
     <div>
       <UserContextProvider>
