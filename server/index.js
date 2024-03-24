@@ -14,16 +14,18 @@ const app = express();
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
 
-app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com' }));
+app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
+methods: ["GET", 'POST', 'PUT', 'DELETE'],
+allowedHeaders: ['Content-Type', 'Authorization', 'token'], }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: process.env.HOST,
   user: process.env.USER,
   password: process.env.DB_PASSWORD,
-  database: "book_store",
+  database: process.env.DB_NAME,
 });
 
 
