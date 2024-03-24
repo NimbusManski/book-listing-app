@@ -12,11 +12,12 @@ import { useEffect } from "react";
 function App() {
 useEffect(() => {
   const test = async () => {
-    const res = await fetck('https://book-listing-app-api.onrender.com/AlotOfArgonians/test') 
+    const res = await fetch('https://book-listing-app-api.onrender.com/AlotOfArgonians/test') 
       console.log(res);
     
   }
-})
+  test();
+}, [])
 
 
   return (
