@@ -13,10 +13,10 @@ const app = express();
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
-
+// allowedHeaders: ['Content-Type', 'Authorization', 'token']
 app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
-allowedHeaders: ['Content-Type', 'Authorization', 'token'], }));
+allowedHeaders: ['*'], }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
