@@ -16,7 +16,7 @@ const secret = process.env.SECRET;
 // allowedHeaders: ['Content-Type', 'Authorization', 'token']
 app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
-allowedHeaders: ['content-type', 'Access-Control-Allow-Origin'], }));
+allowedHeaders: ['content-type', 'Authorization', 'token'], }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
