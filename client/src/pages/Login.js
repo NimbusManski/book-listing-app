@@ -11,17 +11,29 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      // const response = await axios.post(
+      //   `${process.env.REACT_APP_SERVER_URL}/login`,
+      //   {
+      //     username: username,
+      //     password: password,
+      //   },
+      //   {
+      //     withCredentials: true,
+      //     headers: {
+      //       "Access-Control-Allow-Origin": "*",
+      //     },
+      //   }
+      // );
+      const response = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/login`,
         {
-          username: username,
-          password: password,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
+          method: "POST",
+          headers: { "Content-Type": "application/json"},
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+          credentials: 'include'
         }
       );
       if (response.status === 200) {
