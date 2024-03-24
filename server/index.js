@@ -106,6 +106,7 @@ app.post("/login", (req, res) => {
               if (err) {
                 console.log(err);
               } else {
+                res.setHeader('Access-Control-Allow-Origin', '*');
                 res.cookie("token", token).json({ id, username });
               }
             }
