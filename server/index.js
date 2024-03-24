@@ -13,8 +13,7 @@ const app = express();
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
-// allowedHeaders: ['Content-Type', 'Authorization', 'token']
-app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com/',
+app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
 allowedHeaders: ['content-type', 'Authorization', 'token'], }));
 app.use(express.json());
