@@ -29,7 +29,7 @@ useEffect(() => {
 
   return (
     <div>
-      <UserContextProvider>
+     
         <BrowserRouter>
           <Routes>
             <Route path={"/"} element={<Books />} />
@@ -41,9 +41,17 @@ useEffect(() => {
             <Route path="*" element={<Books />} />
           </Routes>
         </BrowserRouter>
-      </UserContextProvider>
+      
     </div>
   );
 }
 
-export default App;
+function AppWithProvider() {
+  return (
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
+  );
+}
+
+export default AppWithProvider;
