@@ -6,7 +6,7 @@ import CreateBook from "./pages/CreateBook";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
-import { UserContextProvider } from "./UserContext";
+import { UserContextProvider, UserContext } from "./UserContext";
 import { useEffect, useContext } from "react";
 
 function App() {
