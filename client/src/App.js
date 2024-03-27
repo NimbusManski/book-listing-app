@@ -10,10 +10,17 @@ import { UserContextProvider } from "./UserContext";
 import { useEffect } from "react";
 
 function App() {
+  const { setUserInfo, userInfo } = useContext(UserContext);
+
+
 useEffect(() => {
   const test = async () => {
-    const res = await fetch('https://book-listing-app-api.onrender.com/AlotOfArgonians/test') 
-      console.log(res);
+    const res = await fetch(`https://book-listing-app-api.onrender.com/${userInfo.username}/${userInfo.password}`,
+    {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+    }) 
+      console.log(res.json());
     
   }
   test();
