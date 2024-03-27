@@ -19,7 +19,7 @@ allowedHeaders: ['content-type', 'Authorization', 'token'], }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.options('/login', cors());
+// app.options('/login', cors());
 
 const db = mysql.createConnection({
   host: process.env.HOST,
@@ -107,6 +107,7 @@ app.post("/login", (req, res) => {
               if (err) {
                 console.log(err);
               } else {
+                // res.set('Access-Control-Allow-Origin', 'https://book-listing-app.onrender.com');
                 res.cookie("token", token).json({ id, username });
               }
             }
