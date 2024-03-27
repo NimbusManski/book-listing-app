@@ -7,10 +7,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
 import { UserContextProvider } from "./UserContext";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 
 function App() {
-  const { setUserInfo, userInfo } = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
 
 useEffect(() => {
@@ -24,7 +24,7 @@ useEffect(() => {
     
   }
   test();
-}, [])
+}, [userInfo]);
 
 
   return (
