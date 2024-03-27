@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BookDetails from "./pages/BookDetails";
 import { UserContextProvider, UserContext } from "./UserContext";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 
 function App() {
   const { userInfo } = useContext(UserContext);

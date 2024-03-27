@@ -19,6 +19,7 @@ allowedHeaders: ['content-type', 'Authorization', 'token'], }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
+app.options('/login', cors());
 
 const db = mysql.createConnection({
   host: process.env.HOST,
