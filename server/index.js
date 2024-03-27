@@ -69,63 +69,9 @@ app.post("/register", (req, res) => {
   }
 });
 
-// app.post("/login", (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-//     console.log(username, password);
-
-//     if (!username || !password) {
-//       return res.status(400).json({ error: "Username and password are required" });
-//     }
-
-//     const q = "SELECT * FROM book_store.users WHERE username = ?";
-
-//     db.query(q, [username], (err, data) => {
-//       console.log("Query Error:", err);
-//       console.log("Query Result:", data);
-//       if (err) {
-//         console.log(data);
-//       }
-
-//       if (data.length === 1) {
-//         const { id, username, password: storedPass } = data[0];
-//         console.log("Entered password:", password);
-//         console.log("Stored hashed password:", storedPass);
-//         const passMatch = bcrypt.compareSync(password, storedPass);
-//         if (passMatch) {
-//           jwt.sign(
-//             {
-//               id,
-//               username,
-//             },
-//             secret,
-//             {
-//               expiresIn: "1h",
-//             },
-//             (err, token) => {
-//               if (err) {
-//                 console.log(err);
-//               } else {
-//                 res.set('Access-Control-Allow-Origin', 'https://book-listing-app.onrender.com');
-//                 res.cookie("token", token).json({ id, username });
-//               }
-//             }
-//           );
-//         }
-//       } else {
-//         res.status(401).json({ error: "Invalid username or password" });
-//       }
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
-app.get("/login/:username/:password", (req, res) => {
+app.post("/login", (req, res) => {
   try {
-    const password = req.params.password;
-    const username = req.params.username;
+    const { username, password } = req.body;
     console.log(username, password);
 
     if (!username || !password) {
@@ -175,6 +121,8 @@ app.get("/login/:username/:password", (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
 
 app.get("/profile", (req, res) => {
   try {

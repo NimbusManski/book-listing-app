@@ -13,23 +13,10 @@ function App() {
   const { userInfo } = useContext(UserContext);
 
 
-useEffect(() => {
-  const test = async () => {
-    const res = await fetch(`https://book-listing-app-api.onrender.com/${userInfo.username}/${userInfo.password}`,
-    {
-      method: "GET",
-      headers: {"Content-Type": "application/json"}
-    }) 
-      console.log(res.json());
-    
-  }
-  test();
-}, [userInfo]);
-
 
   return (
     <div>
-     
+      <UserContextProvider>
         <BrowserRouter>
           <Routes>
             <Route path={"/"} element={<Books />} />
@@ -41,17 +28,9 @@ useEffect(() => {
             <Route path="*" element={<Books />} />
           </Routes>
         </BrowserRouter>
-      
+      </UserContextProvider>
     </div>
   );
 }
 
-function AppWithProvider() {
-  return (
-    <UserContextProvider>
-      <App />
-    </UserContextProvider>
-  );
-}
-
-export default AppWithProvider;
+export default App;
