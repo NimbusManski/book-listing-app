@@ -11,8 +11,6 @@ const fs = require("fs");
 
 const app = express();
 
-const salt = bcrypt.genSaltSync(10);
-const secret = process.env.SECRET;
 app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
 allowedHeaders: ['content-type', 'Authorization', 'token'], }));
@@ -20,6 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 // app.options('/login', cors());
+
+const salt = bcrypt.genSaltSync(10);
+const secret = process.env.SECRET;
 
 const db = mysql.createConnection({
   host: process.env.HOST,
