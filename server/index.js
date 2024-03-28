@@ -11,7 +11,7 @@ const fs = require("fs");
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: 'https://localhost:3000',
+app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
 allowedHeaders: ['content-type', 'Authorization', 'token'], }));
 app.use(express.json());
