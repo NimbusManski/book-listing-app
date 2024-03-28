@@ -14,6 +14,9 @@ const app = express();
 app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
 allowedHeaders: ['content-type', 'Authorization', 'token'], }));
+
+console.log('Adding CORS support for https://book-listing-app.onrender.com');
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
