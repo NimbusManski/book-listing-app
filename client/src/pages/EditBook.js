@@ -56,7 +56,7 @@ export default function EditBook() {
     }
 
     const response = await axios.put(
-      `${process.env.SERVER}/books/${bookId}`,
+      `${process.env.REACT_APP_SERVER_URL}/books/${bookId}`,
       data
     );
 
