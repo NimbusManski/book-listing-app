@@ -11,7 +11,7 @@ const fs = require("fs");
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: ['https://book-listing-app.onrender.com', 'mysql-38876a60-book-store-db.a.aivencloud.com'],
+app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
 methods: ['GET', 'POST', 'PUT', 'DELETE'],
 allowedHeaders: ['content-type', 'Authorization', 'token'], }));
 
