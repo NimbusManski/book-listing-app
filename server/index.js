@@ -46,7 +46,7 @@ app.post("/register", (req, res) => {
       return res.status(400).json({ error: "Username and password required" });
     }
 
-    q = "SELECT * FROM book_store.users WHERE username = ?";
+    q = "SELECT * FROM bv9bjjshw2vksyyiknwr.users WHERE username = ?";
 
     db.query(q, [username], (err, data) => {
       if (err) {
@@ -57,7 +57,7 @@ app.post("/register", (req, res) => {
         return res.status(409).json({ error: "User already exists" });
       } else {
         const q =
-          "INSERT INTO book_store.users (`username`, `password`) VALUES (?, ?)";
+          "INSERT INTO bv9bjjshw2vksyyiknwr.users (`username`, `password`) VALUES (?, ?)";
         db.query(q, [username, hashedPass], (err, data) => {
           if (err) {
             console.log(err);
@@ -83,7 +83,7 @@ app.post("/login", (req, res) => {
       return res.status(400).json({ error: "Username and password are required" });
     }
 
-    const q = "SELECT * FROM book_store.users WHERE username = ?";
+    const q = "SELECT * FROM bv9bjjshw2vksyyiknwr.users WHERE username = ?";
 
     db.query(q, [username], (err, data) => {
       console.log("Query Error:", err);
@@ -169,7 +169,7 @@ app.get("/books", (req, res) => {
 app.post("/books", uploadMiddleware.single("file"), (req, res) => {
   try {
     q =
-      "INSERT INTO book_store.books (`user_id`, `title`, `description`, `price`, `cover`) VALUES (?)";
+      "INSERT INTO bv9bjjshw2vksyyiknwr.books (`user_id`, `title`, `description`, `price`, `cover`) VALUES (?)";
     const { originalname, path } = req.file;
     const userId = req.body.user_id;
     console.log(req.body);
@@ -204,7 +204,7 @@ app.post("/books", uploadMiddleware.single("file"), (req, res) => {
 app.get("/books/:id", (req, res) => {
   try {
     const bookId = req.params.id;
-    const q = "SELECT * FROM book_store.books WHERE id = ?";
+    const q = "SELECT * FROM bv9bjjshw2vksyyiknwr.books WHERE id = ?";
 
     db.query(q, [bookId], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -240,7 +240,7 @@ app.put("/books/:id", uploadMiddleware.single("file"), (req, res) => {
     const bookId = req.params.id;
     const { title, description, price } = req.body;
     const q =
-      "UPDATE book_store.books SET `title` = ?, `description` = ?, `price` = ?, `cover` = IFNULL(?, `cover`) WHERE id = ?";
+      "UPDATE bv9bjjshw2vksyyiknwr.books SET `title` = ?, `description` = ?, `price` = ?, `cover` = IFNULL(?, `cover`) WHERE id = ?";
 
     let newPath = null;
     if (req.file) {
