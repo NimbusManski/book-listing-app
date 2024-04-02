@@ -112,7 +112,7 @@ app.post("/login", (req, res) => {
                 console.log(err);
               } else {
                 // res.set('Access-Control-Allow-Origin', 'https://book-listing-app.onrender.com');
-                res.cookie("token", token, {httpOnly: true, secure: true, sameSite: "strict"}).json({ id, username });
+                res.cookie("token", token).json({ id, username });
               }
             }
           );
