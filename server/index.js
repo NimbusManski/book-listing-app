@@ -112,7 +112,11 @@ app.post("/login", (req, res) => {
                 console.log(err);
               } else {
                 // res.set('Access-Control-Allow-Origin', 'https://book-listing-app.onrender.com');
-                res.cookie("token", token).json({ id, username });
+                res.cookie("token", token, { 
+                  httpOnly: true, 
+                  secure: true, 
+                  sameSite: 'none' 
+                }).json({ id, username });
               }
             }
           );
@@ -132,8 +136,8 @@ app.post("/login", (req, res) => {
 app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
-    if(cookie.token) {
-      jwt.verify(token, secret, {}, (err, info) => {
+    
+    jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
           res.status(401).json({ message: "Token has expired" });
@@ -146,8 +150,6 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
-    }
-    
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Internal server error" });
