@@ -12,8 +12,8 @@ const fs = require("fs");
 const app = express();
 
 app.use(cors({ credentials: true, origin: 'https://book-listing-app.onrender.com',
-methods: ['GET', 'POST', 'PUT', 'DELETE']
- }));
+methods: ['GET', 'POST', 'PUT', 'DELETE'],
+allowedHeaders: ['content-type', 'Authorization'], }));
 
 console.log('Adding CORS support for https://book-listing-app.onrender.com');
 
@@ -112,7 +112,7 @@ app.post("/login", (req, res) => {
                 console.log(err);
               } else {
                 // res.set('Access-Control-Allow-Origin', 'https://book-listing-app.onrender.com');
-                res.cookie("token", token).json({ id, username });
+                res.cookie("token", token, {httpOnly: true, secure: true, sameSite: "strict"}).json({ id, username });
               }
             }
           );
