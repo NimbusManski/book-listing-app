@@ -132,8 +132,8 @@ app.post("/login", (req, res) => {
 app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
-
-    jwt.verify(token, secret, {}, (err, info) => {
+    if(cookie.token) {
+      jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
           res.status(401).json({ message: "Token has expired" });
@@ -146,6 +146,8 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
+    }
+    
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "Internal server error" });
