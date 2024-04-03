@@ -115,7 +115,7 @@ app.post("/login", (req, res) => {
                 res.cookie("token", token, { 
                   httpOnly: true, 
                   secure: true, 
-                  sameSite: 'strict' 
+                  sameSite: 'none' 
                 }).json({ id, username });
               }
             }
