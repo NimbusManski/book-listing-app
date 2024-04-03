@@ -40,11 +40,13 @@ function Header() {
       .post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
         withCredentials: true,
       })
-      .then(() => {
-        navigate("/login");
-        setIsLoggedIn(false);
-        setUserInfo("");
-        document.cookie = "token" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      .then((response) => {
+        if (response.status === 200) {
+          setIsLoggedIn(false);
+          navigate("/login");
+          setUserInfo("");
+          document.cookie = "token" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
       })
       .catch((err) => {
         console.log(err);
