@@ -41,7 +41,7 @@ function Header() {
         withCredentials: true,
       })
       .then(() => {
-        navigate("login");
+        navigate("/login");
         setIsLoggedIn(false);
         setUserInfo("");
       })
