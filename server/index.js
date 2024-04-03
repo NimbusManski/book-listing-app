@@ -272,8 +272,11 @@ app.delete("/profile/:id", (req, res) => {
     const q = "DELETE FROM users WHERE id = ?";
     db.query(q, [id], (err, data) => {
       if (err) return res.json(err);
-      return res.json("Account successfully deleted");
+      return res.json("Account successfully deleted");  
     });
+    
+    res.cookie("token", "").json("cookie deleted");
+    
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "internal server error" });
