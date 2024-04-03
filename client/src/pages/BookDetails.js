@@ -54,7 +54,7 @@ const BookDetails = () => {
     }
   }
 
-  console.log(book.user_id === userInfo.id);
+  console.log(book.user_id, userInfo.id);
 
   return (
     <div className="detailed-book">
