@@ -37,7 +37,7 @@ function Header() {
 
   function logoutHandler() {
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/logout`, {}, {
+      .post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
         withCredentials: true,
       })
       .then(() => {
