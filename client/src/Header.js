@@ -43,9 +43,9 @@ function Header() {
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(false);
-          navigate("/login");
+          navigate("/");
           setUserInfo("");
-          document.cookie = "token" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          console.log(isLoggedIn, userInfo)
         }
       })
       .catch((err) => {
@@ -65,7 +65,7 @@ function Header() {
         );
         if (response.status === 200) {
           setIsLoggedIn(false);
-          navigate("/login");
+          navigate("/");
         }
       }
     } catch (err) {
