@@ -44,6 +44,7 @@ function Header() {
         navigate("/login");
         setIsLoggedIn(false);
         setUserInfo("");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
