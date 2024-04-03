@@ -285,9 +285,6 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json("cookie deleted");
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '-1');
 });
 
 app.listen(process.env.PORT, (req, res) => {
