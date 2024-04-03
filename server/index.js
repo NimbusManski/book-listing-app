@@ -282,14 +282,7 @@ app.delete("/profile/:id", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.cookie("token", "", {
-    expires: new Date(0), 
-    httpOnly: true, 
-    secure: true, 
-    sameSite: "strict", 
-    path: "/", 
-    domain: "https://book-listing-app.onrender.com" 
-  }).json("cookie deleted");
+  res.cookie("token", "").json("cookie deleted");
 });
 
 app.listen(process.env.PORT, (req, res) => {
