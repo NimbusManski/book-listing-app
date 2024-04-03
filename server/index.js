@@ -113,7 +113,6 @@ app.post("/login", (req, res) => {
               } else {
                 // res.set('Access-Control-Allow-Origin', 'https://book-listing-app.onrender.com');
                 res.cookie("token", token, { 
-                  httpOnly: true, 
                   secure: true, 
                   sameSite: 'none' 
                 }).json({ id, username });
