@@ -276,7 +276,7 @@ app.delete("/profile/:id", (req, res) => {
     });
     
     res.cookie("token", "").json("cookie deleted");
-    
+
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "internal server error" });
@@ -285,6 +285,7 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json("cookie deleted");
+  res.setHeader('Cache-Control', 'no-store');
 });
 
 app.listen(process.env.PORT, (req, res) => {
