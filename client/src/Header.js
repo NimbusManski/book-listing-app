@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import axios from "axios";
 
@@ -140,11 +140,8 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         )}
 
         {!isLoggedIn && (
-          <>
-            <Link to={"/login"}>Login</Link>
-            <Link to={"/register"}>Register</Link>
-          </>
-        )}
+        <Navigate to={'/login'} />
+      )}
       </nav>
     </header>
   );
