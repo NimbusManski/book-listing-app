@@ -285,7 +285,6 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.clearCookie("token").json("cookie deleted");
-  res.redirect('/login');
 });
 
 app.listen(process.env.PORT, (req, res) => {
