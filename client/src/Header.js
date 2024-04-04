@@ -43,7 +43,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         if (response.status === 200) {
           setIsLoggedIn(false);
           navigate("/");
-          setUserInfo("");
+          setUserInfo(null);
           console.log(isLoggedIn, userInfo)
         }
     } catch(err) {
