@@ -74,6 +74,10 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
     }
   }
 
+  if(!isLoggedIn) {
+     navigate("/login");
+  }
+
   return (
     <header>
       <Link to="/" className="logo">
