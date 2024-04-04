@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Header from "../Header";
+import { UserContext } from "../UserContext";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchBooks() {
@@ -16,7 +18,11 @@ export default function Books() {
         console.log(err);
       }
     }
-    fetchBooks();
+
+    if(userInfo) {
+      fetchBooks();
+    }
+
   }, []);
 
   return (
