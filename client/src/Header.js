@@ -20,6 +20,8 @@ function Header() {
             setUserInfo(response.data);
             setIsLoggedIn(true);
           }
+        } else {
+          navigate("/login");
         }
       } catch (err) {
         console.log(err);
@@ -74,9 +76,6 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
     }
   }
 
-  if(!isLoggedIn) {
-     navigate("/login");
-  }
 
   return (
     <header>
