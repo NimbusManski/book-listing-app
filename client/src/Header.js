@@ -11,17 +11,19 @@ function Header() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
-          withCredentials: true,
-        });
-
-        if (response.status === 200) {
-          setUserInfo(response.data);
-          setIsLoggedIn(true);
+        if (isLoggedIn) {
+          const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
+            withCredentials: true,
+          });
+  
+          if (response.status === 200) {
+            setUserInfo(response.data);
+            setIsLoggedIn(true);
+          }
         }
       } catch (err) {
         console.log(err);
-        if(err.response.status === 401 && !isLoggedIn) {
+        if (err.response.status === 401 && !isLoggedIn) {
           navigate("/login");
         }
         if (err.response.status === 401 && isLoggedIn) {
@@ -29,11 +31,11 @@ function Header() {
           setIsLoggedIn(false);
           navigate("/login");
         }
-       
       }
     }
+  
     fetchUserData();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate, setUserInfo]);
 
   async function logoutHandler() {
     try{
