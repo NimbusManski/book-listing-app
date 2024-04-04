@@ -20,8 +20,6 @@ function Header() {
             setUserInfo(response.data);
             setIsLoggedIn(true);
           }
-        } else {
-          navigate("/login");
         }
       } catch (err) {
         console.log(err);
