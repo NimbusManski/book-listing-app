@@ -35,22 +35,20 @@ function Header() {
     fetchUserData();
   }, [isLoggedIn]);
 
-  function logoutHandler() {
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+  async function logoutHandler() {
+    try{
+const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
         withCredentials: true,
       })
-      .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(false);
           navigate("/");
           setUserInfo("");
           console.log(isLoggedIn, userInfo)
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   async function deleteAcctHandler() {
