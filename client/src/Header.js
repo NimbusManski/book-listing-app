@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import axios from "axios";
 
@@ -45,7 +45,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         if (response.status === 200) {
           setIsLoggedIn(false);
           console.log(isLoggedIn);
-          navigate("/login");
+          navigate("/");
           setUserInfo(null);
           console.log(isLoggedIn, userInfo)
         }
@@ -66,14 +66,13 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         );
         if (response.status === 200) {
           setIsLoggedIn(false);
-          navigate("/login");
+          navigate("/");
         }
       }
     } catch (err) {
       console.log(err);
     }
   }
-
 
   return (
     <header>
@@ -140,8 +139,11 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         )}
 
         {!isLoggedIn && (
-        <Navigate to={'/login'} />
-      )}
+          <>
+            <Link to={"/login"}>Login</Link>
+            <Link to={"/register"}>Register</Link>
+          </>
+        )}
       </nav>
     </header>
   );
