@@ -18,6 +18,7 @@ function Header() {
   
           if (response.status === 200) {
             setUserInfo(response.data);
+            console.log(response.data);
             setIsLoggedIn(true);
           }
         }
