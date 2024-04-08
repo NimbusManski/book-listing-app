@@ -35,7 +35,7 @@ function Header() {
     }
   
     fetchUserData();
-  }, []);
+  }, [isLoggedIn]);
 
   async function logoutHandler() {
     try{
