@@ -38,7 +38,7 @@ function Header() {
     console.log(isLoggedIn);
   
     fetchUserData();
-  }, []);
+  }, [isLoggedIn, userInfo]);
 
   async function logoutHandler() {
     try{
