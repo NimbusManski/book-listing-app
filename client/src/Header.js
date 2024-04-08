@@ -21,7 +21,7 @@ function Header() {
             console.log(response.data);
             setIsLoggedIn(true);
           }
-        }
+        // }
       } catch (err) {
         console.log(err);
         if (err.response.status === 401 && !isLoggedIn) {
@@ -33,7 +33,7 @@ function Header() {
           navigate("/login");
         }
       }
-    // }
+    }
 
     console.log(isLoggedIn);
   
