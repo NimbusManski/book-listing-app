@@ -11,7 +11,7 @@ function Header() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        if (isLoggedIn) {
+        // if (isLoggedIn) {
           const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
             withCredentials: true,
           });
@@ -33,7 +33,7 @@ function Header() {
           navigate("/login");
         }
       }
-    }
+    // }
 
     console.log(isLoggedIn);
   
