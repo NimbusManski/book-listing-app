@@ -45,6 +45,11 @@ function Header() {
 
   }, [isLoggedIn, userInfo]);
 
+  useEffect(() => {
+    console.log(userInfo);
+    console.log(isLoggedIn);
+  }, [isLoggedIn, userInfo]);
+
   async function logoutHandler() {
     try{
 const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
@@ -52,10 +57,8 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
       })
         if (response.status === 200) {
           setIsLoggedIn(false);
-          console.log(isLoggedIn);
           setUserInfo(null);
           navigate("/login");
-          console.log(isLoggedIn, userInfo)
         }
     } catch(err) {
       console.log(err);
