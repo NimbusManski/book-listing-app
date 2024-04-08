@@ -34,6 +34,8 @@ function Header() {
         }
       }
     }
+
+    console.log(isLoggedIn);
   
     fetchUserData();
   }, [isLoggedIn]);
