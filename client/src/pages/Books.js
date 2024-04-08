@@ -25,9 +25,9 @@ export default function Books() {
 
   return (
     <div>
+     <Header />
       {userInfo && (
         <>
-        <Header />
       <div className="books">
         {books.map((book) => (
           <div className="book" key={book.id}>
