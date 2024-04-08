@@ -35,9 +35,14 @@ function Header() {
       }
     }
 
+    if (userInfo === null) {
+      fetchUserData();
+    } else {
+      setIsLoggedIn(true);
+    }
+
     console.log(isLoggedIn);
-  
-    fetchUserData();
+
   }, [isLoggedIn, userInfo]);
 
   async function logoutHandler() {
