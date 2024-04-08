@@ -49,7 +49,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           setIsLoggedIn(false);
           console.log(isLoggedIn);
           navigate("/login");
-          setUserInfo("");
+          setUserInfo(null);
           console.log(isLoggedIn, userInfo)
         }
     } catch(err) {
@@ -69,7 +69,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         );
         if (response.status === 200) {
           setIsLoggedIn(false);
-          navigate("/");
+          navigate("/login");
         }
       }
     } catch (err) {
