@@ -1,17 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Header from "../Header";
+import { UserContext } from "../UserContext";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/books`);
+        if(userInfo) {
+          const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/books`);
         setBooks(response.data);
-        console.log(response.data)
+        console.log(response.data);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -21,7 +25,9 @@ export default function Books() {
 
   return (
     <div>
-      <Header />
+      {userInfo && (
+        <>
+        <Header />
       <div className="books">
         {books.map((book) => (
           <div className="book" key={book.id}>
@@ -38,6 +44,9 @@ export default function Books() {
           </div>
         ))}
       </div>
+        </>
+      )}
+      
     </div>
   );
 }
