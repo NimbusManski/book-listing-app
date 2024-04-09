@@ -36,8 +36,9 @@ function Header() {
     }
 
     // console.log(isLoggedIn);
-
-    fetchUserData();
+    if (Object.keys(userInfo).length === 0) {
+      fetchUserData();
+    }
   }, [userInfo]);
 
   useEffect(() => {
