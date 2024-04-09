@@ -109,7 +109,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
                 </svg>
                 Add new book
               </Link>
-             <LogoutHandler />>
+             <LogoutHandler />
               <a className="delete" href="#" onClick={deleteAcctHandler}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
