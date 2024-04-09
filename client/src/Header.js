@@ -5,7 +5,7 @@ import axios from "axios";
 
 function Header() {
   const { setUserInfo, userInfo } = useContext(UserContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function Header() {
           if (response.status === 200) {
             setUserInfo(response.data);
             console.log(response.data);
-            setIsLoggedIn(true);
+            // setIsLoggedIn(true);
           }
         // }
       } catch (err) {
@@ -29,7 +29,7 @@ function Header() {
         }
         if (err.response.status === 401 && isLoggedIn) {
           alert("Session has expired");
-          setIsLoggedIn(false);
+          // setIsLoggedIn(false);
           navigate("/login");
         }
       }
@@ -42,8 +42,8 @@ function Header() {
 
   useEffect(() => {
     console.log(userInfo);
-    console.log(isLoggedIn);
-  }, [isLoggedIn, userInfo]);
+    // console.log(isLoggedIn);
+  }, [ userInfo]);
 
   async function logoutHandler() {
     try{
@@ -86,7 +86,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         CRUD's Book Store
       </Link>
       <nav>
-        {isLoggedIn && (
+        {Object.keys(userInfo).length > 0 && (
           <>
             <span className="username">Logged in as {userInfo.username}</span>
             <div>
@@ -144,7 +144,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           </>
         )}
 
-        {!isLoggedIn && (
+        {Object.keys(userInfo).length === 0 && (
           <>
             <Link to={"/login"}>Login</Link>
             <Link to={"/register"}>Register</Link>
