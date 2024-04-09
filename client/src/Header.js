@@ -149,7 +149,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           </>
         )}
 
-        {!isLoggedIn && (
+        {!userInfo.username && (
           <>
             <Link to={"/login"}>Login</Link>
             <Link to={"/register"}>Register</Link>
