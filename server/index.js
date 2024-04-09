@@ -284,10 +284,10 @@ app.delete("/profile/:id", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("token").json("cookie deleted");
-  res.redirect('/login');
+  res.clearCookie("token",{ path: '/' }).json("cookie deleted");
 });
 
 app.listen(process.env.PORT, (req, res) => {
   console.log("Backend running");
 });
+// eyJhbGciO

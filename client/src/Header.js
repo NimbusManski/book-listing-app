@@ -39,7 +39,7 @@ function Header() {
     if (Object.keys(userInfo).length === 0) {
       fetchUserData();
     }
-  }, [userInfo]);
+  }, []);
 
   useEffect(() => {
     console.log(userInfo);
