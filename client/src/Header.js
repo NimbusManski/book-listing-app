@@ -36,7 +36,7 @@ function Header() {
     }
 
     console.log(isLoggedIn);
-    
+
     fetchUserData();
   }, [isLoggedIn, userInfo]);
 
@@ -52,7 +52,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
       })
         if (response.status === 200) {
           setIsLoggedIn(false);
-          setUserInfo("");
+          setUserInfo({});
           navigate("/login");
         }
     } catch(err) {
