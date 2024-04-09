@@ -91,7 +91,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         CRUD's Book Store
       </Link>
       <nav>
-        {userInfo.username && (
+        {isLoggedIn && (
           <>
             <span className="username">Logged in as {userInfo.username}</span>
             <div>
@@ -149,7 +149,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           </>
         )}
 
-        {!userInfo.username && (
+        {!isLoggedIn && (
           <>
             <Link to={"/login"}>Login</Link>
             <Link to={"/register"}>Register</Link>
