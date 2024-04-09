@@ -91,7 +91,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         CRUD's Book Store
       </Link>
       <nav>
-        {isLoggedIn && (
+        {userInfo.username && (
           <>
             <span className="username">Logged in as {userInfo.username}</span>
             <div>
