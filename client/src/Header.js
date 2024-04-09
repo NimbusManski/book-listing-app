@@ -24,10 +24,10 @@ function Header() {
         // }
       } catch (err) {
         console.log(err);
-        if (err.response.status === 401 && !isLoggedIn) {
+        if (err.response.status === 401 && Object.keys(userInfo).length === 0) {
           navigate("/login");
         }
-        if (err.response.status === 401 && isLoggedIn) {
+        if (err.response.status === 401 && Object.keys(userInfo).length > 0) {
           alert("Session has expired");
           // setIsLoggedIn(false);
           navigate("/login");
@@ -35,7 +35,7 @@ function Header() {
       }
     }
 
-    console.log(isLoggedIn);
+    // console.log(isLoggedIn);
 
     fetchUserData();
   }, []);
@@ -43,7 +43,7 @@ function Header() {
   useEffect(() => {
     console.log(userInfo);
     // console.log(isLoggedIn);
-  }, [ userInfo]);
+  }, [userInfo]);
 
   async function logoutHandler() {
     try{
@@ -51,7 +51,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         withCredentials: true,
       })
         if (response.status === 200) {
-          setIsLoggedIn(false);
+          // setIsLoggedIn(false);
           setUserInfo({});
           navigate("/login");
         }
@@ -71,7 +71,8 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           { withCredentials: true }
         );
         if (response.status === 200) {
-          setIsLoggedIn(false);
+          setUserInfo({})
+          // setIsLoggedIn(false);
           navigate("/login");
         }
       }
