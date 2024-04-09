@@ -38,7 +38,7 @@ function Header() {
     console.log(isLoggedIn);
 
     fetchUserData();
-  }, [isLoggedIn, userInfo]);
+  }, [userInfo]);
 
   useEffect(() => {
     console.log(userInfo);
