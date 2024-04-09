@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import LogoutHandler from "./pages/Logout";
 import axios from "axios";
 
 function Header() {
@@ -109,7 +108,23 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
                 </svg>
                 Add new book
               </Link>
-             <LogoutHandler />
+              <a className="logout" href="#" onClick={logoutHandler}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                  />
+                </svg>
+                Logout
+              </a>
               <a className="delete" href="#" onClick={deleteAcctHandler}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
