@@ -35,14 +35,9 @@ function Header() {
       }
     }
 
-    if (userInfo === "") {
-      fetchUserData();
-    } else {
-      setIsLoggedIn(true);
-    }
-
     console.log(isLoggedIn);
-
+    
+    fetchUserData();
   }, [isLoggedIn, userInfo]);
 
   useEffect(() => {
