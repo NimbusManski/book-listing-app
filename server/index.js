@@ -145,9 +145,6 @@ app.get("/profile", (req, res) => {
           res.status(500).json({ message: "Internal server error" });
         }
       } else {
-        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
-  res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
-  res.setHeader('Expires', '0'); // Proxies.
         res.json(info);
       }
     });
@@ -287,11 +284,6 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   res.clearCookie("token",{ path: '/' }).json("cookie deleted");
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); // HTTP 1.1.
-  res.setHeader('Pragma', 'no-cache'); // HTTP 1.0.
-  res.setHeader('Expires', '0'); // Proxies.
-  
-  res.redirect('/login');
 });
 
 app.listen(process.env.PORT, (req, res) => {
