@@ -283,7 +283,11 @@ app.delete("/profile/:id", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("token",{ path: '/' }).json("cookie deleted");
+  try {
+    res.clearCookie("token",{ path: '/' }).json("cookie deleted");
+  } catch(err) {
+    console.error(err);
+  }
 });
 
 app.listen(process.env.PORT, (req, res) => {
