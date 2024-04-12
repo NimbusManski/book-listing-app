@@ -59,7 +59,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           setUserInfo({});
           document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
           // setIsLoggedIn(false);
-          // navigate("/login");
+          navigate("/login");
         }
     } catch(err) {
       console.log(err);
