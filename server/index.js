@@ -112,7 +112,7 @@ app.post("/login", (req, res) => {
                 console.log(err);
               } else {
                 res.cookie("token", token, { 
-                  secure: true, 
+                  // secure: true, 
                   sameSite: 'none' 
                 }).json({ id, username });
               }
