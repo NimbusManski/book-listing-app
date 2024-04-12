@@ -21,6 +21,10 @@ function Header() {
             console.log(response.data);
             // setIsLoggedIn(true);
           }
+
+          if (document.cookie = '') {
+            navigate('/login');
+          }
         // }
       } catch (err) {
         console.log(err);
