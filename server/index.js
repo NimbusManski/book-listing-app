@@ -284,7 +284,7 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   try {
-    res.clearCookie("token",{ path: '/' }).json("cookie deleted");
+    res.cookie("token", "").json("cookie deleted");
   } catch(err) {
     console.error(err);
   }
