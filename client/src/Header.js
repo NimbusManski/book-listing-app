@@ -22,10 +22,6 @@ function Header() {
             // setIsLoggedIn(true);
           }
 
-          if(Object.keys(userInfo.length === 0)) {
-            navigate('/login');
-          };
-
           // if (document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/') {
           //   navigate('/login');
           // }
