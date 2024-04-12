@@ -149,7 +149,8 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
-    } else {
+    } 
+    if(token === ';') {
       res.redirect('login');
     }
     
