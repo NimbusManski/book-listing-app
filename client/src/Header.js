@@ -57,6 +57,8 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
       })
         if (response.status === 200) {
           setUserInfo({});
+          window.localStorage.clear(); 
+          window.sessionStorage.clear();
           document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
           // setIsLoggedIn(false);
           navigate("/login");
