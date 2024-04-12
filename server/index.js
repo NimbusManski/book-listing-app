@@ -135,7 +135,6 @@ app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
 
-    if(token) {
       jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
@@ -149,11 +148,6 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
-    } 
-    if(token === ';') {
-      res.redirect('login');
-    }
-    
     
   } catch (e) {
     console.error(e);

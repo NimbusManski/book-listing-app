@@ -11,7 +11,7 @@ function Header() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        // if (isLoggedIn) {
+        
           const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
             withCredentials: true,
           });
@@ -22,10 +22,14 @@ function Header() {
             // setIsLoggedIn(true);
           }
 
+          if(Object.keys(userInfo.length === 0)) {
+            navigate('/login');
+          };
+
           // if (document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/') {
           //   navigate('/login');
           // }
-        // }
+        
       } catch (err) {
         console.log(err);
         if (err.response.status === 401 && Object.keys(userInfo).length === 0) {
