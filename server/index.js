@@ -149,6 +149,8 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
+    } else {
+      res.redirect('login');
     }
     
     
