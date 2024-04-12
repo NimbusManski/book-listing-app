@@ -56,7 +56,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           localStorage.clear();
           document.cookie = '';
           setUserInfo({});
-          navigate("/login");
+          // navigate("/login");
         }
     } catch(err) {
       console.log(err);
