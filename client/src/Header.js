@@ -56,8 +56,9 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
         withCredentials: true,
       })
         if (response.status === 200) {
-          // setIsLoggedIn(false);
           setUserInfo({});
+          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+          // setIsLoggedIn(false);
           // navigate("/login");
         }
     } catch(err) {
