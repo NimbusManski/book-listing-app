@@ -22,9 +22,9 @@ function Header() {
             // setIsLoggedIn(true);
           }
 
-          // if (document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/') {
-          //   navigate('/login');
-          // }
+          if (document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/') {
+           setUserInfo({});
+          }
         
       } catch (err) {
         console.log(err);
