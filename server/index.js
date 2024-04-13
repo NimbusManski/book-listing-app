@@ -285,7 +285,7 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   try {
-    res.clearCookie("token").json("cookie deleted");
+    res.clearCookie("token", { domain: "https://book-listing-app.onrender.com" }).json("cookie deleted");
   } catch(err) {
     console.error(err);
   }
