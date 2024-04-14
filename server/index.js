@@ -150,7 +150,7 @@ app.get("/profile", (req, res) => {
       }
     });
       }
-      
+      console.log(token + 'from profile');
     
   } catch (e) {
     console.error(e);
@@ -293,7 +293,7 @@ app.post("/logout", (req, res) => {
     if(token && !blackList.includes(token)) {
        blackList.push(token);
     };
-   
+   console.log(token + 'from logout');
     res.clearCookie("token").json({message: "Cookie deleted and blacklisted"});
 
   } catch(err) {
