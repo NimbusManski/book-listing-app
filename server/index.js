@@ -291,6 +291,7 @@ app.post("/logout", (req, res) => {
       sameSite: 'none', 
       expires: new Date(0) 
     }).json("cookie deleted");
+    return res.status(200);
   } catch(err) {
     console.error(err);
   }
