@@ -135,7 +135,11 @@ app.post("/login", (req, res) => {
 app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
-      if(!blackList.includes(token)) {
+
+    if(blackList.includes(token)) {
+      return res.status(401).json({message: "Token blacklisted"})
+    }
+    
         jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
@@ -149,8 +153,8 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
-      }
-      console.log(token + 'from profile');
+      
+      console.log(blackList + 'from profile');
     
   } catch (e) {
     console.error(e);
@@ -293,7 +297,7 @@ app.post("/logout", (req, res) => {
     if(token && !blackList.includes(token)) {
        blackList.push(token);
     };
-   console.log(token + 'from logout');
+   console.log(blackList + 'from logout');
     res.clearCookie("token").json({message: "Cookie deleted and blacklisted"});
 
   } catch(err) {
