@@ -53,7 +53,7 @@ function Header() {
   async function logoutHandler() {
      console.log(document.cookie);
     try{
-const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, {}, {
         withCredentials: true,
       })
         if (response.status === 200) {
