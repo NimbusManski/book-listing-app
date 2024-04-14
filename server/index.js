@@ -286,14 +286,10 @@ app.delete("/profile/:id", (req, res) => {
 app.post("/logout", (req, res) => {
  
   try {
-    const cookie = req.headers.cookie.split('=').pop();
+   req.cookie.token = '';
     console.log(cookie);
-    res.clearCookie("token", { 
-      domain: "https://book-listing-app.onrender.com",
-      secure: true, 
-      sameSite: 'none', 
-      expires: new Date(0) 
-    }).json("cookie deleted");
+    res.cookie('token', '');
+  
     return res.status(200);
   } catch(err) {
     console.error(err);
