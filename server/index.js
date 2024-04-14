@@ -24,6 +24,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 const salt = bcrypt.genSaltSync(10);
 const secret = process.env.SECRET;
+const blackList = [];
 
 const db = mysql.createConnection({
   host: process.env.HOST,
@@ -134,8 +135,8 @@ app.post("/login", (req, res) => {
 app.get("/profile", (req, res) => {
   try {
     const { token } = req.cookies;
-
-      jwt.verify(token, secret, {}, (err, info) => {
+      if(!blackList.includes(token)) {
+        jwt.verify(token, secret, {}, (err, info) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
           res.status(401).json({ message: "Token has expired" });
@@ -148,6 +149,8 @@ app.get("/profile", (req, res) => {
         res.json(info);
       }
     });
+      }
+      
     
   } catch (e) {
     console.error(e);
@@ -284,13 +287,15 @@ app.delete("/profile/:id", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
- 
   try {
-   req.cookie.token = '';
-    console.log(cookie);
-    res.cookie('token', '');
-  
-    return res.status(200);
+
+    const { token } = req.cookies;
+    if(token && !blackList.includes(token)) {
+       blackList.push(token);
+    };
+   
+    res.clearCookie("token").json({message: "Cookie deleted and blacklisted"});
+
   } catch(err) {
     console.error(err);
   }
