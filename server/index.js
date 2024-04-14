@@ -285,8 +285,11 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   try {
-    return res.status(200).json({message: "ok"});
-    // res.cookie("token", "", { expires: new Date(0) }).json("cookie deleted");
+    // return res.status(200).json({message: "ok"});
+    res.cookie("token", "", { 
+      secure: true, 
+      sameSite: 'none' 
+    }, { expires: new Date(0) }).json("cookie deleted");
   } catch(err) {
     console.error(err);
   }
