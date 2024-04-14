@@ -285,11 +285,12 @@ app.delete("/profile/:id", (req, res) => {
 
 app.post("/logout", (req, res) => {
   try {
-    // return res.status(200).json({message: "ok"});
-    res.cookie("token", "", { 
+    res.clearCookie("token", { 
+      domain: "https://book-listing-app.onrender.com",
       secure: true, 
-      sameSite: 'none' 
-    }, { expires: new Date(0) }).json("cookie deleted");
+      sameSite: 'none', 
+      expires: new Date(0) 
+    }).json("cookie deleted");
   } catch(err) {
     console.error(err);
   }
