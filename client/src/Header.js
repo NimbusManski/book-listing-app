@@ -12,7 +12,7 @@ function Header() {
     async function fetchUserData() {
       try {
         
-          const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {}, {
+          const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/profile`, {
             withCredentials: true,
           });
   
