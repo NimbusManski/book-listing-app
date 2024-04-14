@@ -51,6 +51,7 @@ function Header() {
   }, [userInfo]);
 
   async function logoutHandler() {
+     console.log(document.cookie);
     try{
 const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, {
         // withCredentials: true,
@@ -59,7 +60,7 @@ const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`, 
           setUserInfo({});
           window.localStorage.clear(); 
           window.sessionStorage.clear();
-          console.log(document.cookie);
+          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
           // setIsLoggedIn(false);
           navigate("/login");
         }
