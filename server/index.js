@@ -106,7 +106,7 @@ app.post("/login", (req, res) => {
             },
             secret,
             {
-              expiresIn: "1h",
+              expiresIn: 420,
             },
             (err, token) => {
               if (err) {
